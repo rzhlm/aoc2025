@@ -27,7 +27,7 @@ class Knob():
                 if self.position == 100:
                     self.position = 0
                     
-                if self.position = -1:
+                if self.position == -1:
                     self.position = 99
 
                 if self.position == 0:
@@ -41,9 +41,26 @@ def test():
     assert(test_knob.position == 82)
     assert(test_knob.zero_count == 1)
 
+    test_knob.rotate("L30")
+    assert(test_knob.position == 52)
+
+    test_knob.rotate("R48")
+    assert(test_knob.position == 0)
+    assert(test_knob.zero_count == 2)
+    
+
 def main():
     test()
-    pass()
+
+    with open("./day1a-data.txt","r") as f:
+        lines = [line.strip() for line in f]
+
+    knob = Knob()
+    for line in lines:
+        knob.rotate(line)
+
+    print(f"{knob.zero_count=}")
+    
 
 
 if __name__ == "__main__":
