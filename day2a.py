@@ -27,7 +27,20 @@ def test_range(start: str, end: str):
     ]
     print(out) if LOGGING else None
     return out
-    
+
+def give_vals() -> list[list[str]]:
+    output = []
+    with open("./day2a-input","r") as f:
+        for line in f:
+            vals_list = line.strip().split(",")
+
+    for val in vals_list:
+        # "a-b"
+        start, end = val.split("-")
+        output.append([start, end])
+    #print("TEST OUTPUT:")
+    #print(output)
+    return output
 
 def test() -> None:
     #for i in range(11,23):
@@ -75,7 +88,12 @@ def test() -> None:
 
 def main() -> None:
     test()
-    pass
+    vals = give_vals()
+    invalid_nums = []
+    for start, end in vals:
+        invalid_nums.extend(test_range(start, end))
+    #print(invalid_nums)
+    print(sum(invalid_nums))
 
 if __name__ == "__main__":
     main()
