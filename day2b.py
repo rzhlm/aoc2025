@@ -3,6 +3,22 @@ import pdb
 LOGGING = False
 non_valids = []
 
+
+def has_digit_groups(num: str) -> bool:
+    for i in range(6, 1, -1):
+        if num[:5] * i == num:
+            print(f"HAS_DIGIT: {i=} {num[:5]=} {num=}")
+            return True
+        if num[:4] * i == num:
+            print(f"HAS_DIGIT: {i=} {num[:4]=} {num=}")
+            return True
+        if num[:3] * i == num:
+            print(f"HAS_DIGIT: {i=} {num[:3]=} {num=}")
+            return True
+        if num[:2] * i == num:
+            print(f"HAS_DIGIT: {i=} {num[:2]=} {num=}")
+            return True
+
 def is_invalid(num: str) -> bool:
     print(f"entering is_invalid: {num=}") if LOGGING else None
     # breakpoint()
@@ -11,13 +27,19 @@ def is_invalid(num: str) -> bool:
         if len(set(num)) == 1:
             return True
         # repeated numbers eg 56_56_56_56
+        # eg 123_123_123
+        # eg 54321_54321
         # pseudo:
         # todo: how to find the k values
         # todo: how to find iterate the string slices, efficiently
-        if num[:2] * k == num
-        if num[:3] * k == num
-        if num[:4] * k == num
+        # maximum input digits in inputfile: 10
+        # 2 - 8: max 4 additional groups of 2
+        # 3 - 7: max 4
+        # 4 - 6: max 2
+        # 5 - 5: max 2 addtional groups of 5
         
+        if has_digit_groups(num):
+            return True
         
         return False
 
@@ -34,6 +56,9 @@ def is_invalid(num: str) -> bool:
     # but how?
     # sets don't contain order: eg set("56") == set("65")
 
+    if has_digit_groups(num):
+        return True
+
     return False
 
 def test_range(start: str, end: str):
@@ -42,12 +67,13 @@ def test_range(start: str, end: str):
                             int(end) + 1)
         if is_invalid(str(i))
     ]
-    print(out) if LOGGING else None
+    #print(out)
     return out
 
 def give_vals() -> list[list[str]]:
     output = []
     with open("./day2a-input","r") as f:
+    #with open("./day2b-testinput.txt",'r') as f:
         for line in f:
             vals_list = line.strip().split(",")
 
@@ -61,6 +87,9 @@ def give_vals() -> list[list[str]]:
 
 def test() -> None:
     #for i in range(11,23):
+    #assert(is_invalid("272727") == False) # no: 27_27_27
+    assert(is_invalid("270270") == True)
+    
     assert(test_range("11","22") == [11,22])
     assert(test_range("95", "115") == [99, 111]) # also 111
     assert(test_range("998","1012") == [999, 1010])
@@ -131,12 +160,13 @@ def search() -> None:
     invalid_nums = []
     for start, end in vals:
         invalid_nums.extend(test_range(start, end))
-    #print(invalid_nums)
+    
+    print(invalid_nums)
     print(sum(invalid_nums))
 
 def main():
     test()
-    #search()
+    search()
 
 if __name__ == "__main__":
     main()
