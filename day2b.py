@@ -7,8 +7,18 @@ def is_invalid(num: str) -> bool:
     print(f"entering is_invalid: {num=}") if LOGGING else None
     # breakpoint()
     if len(num) % 2 != 0:
+        # same digit: eg 333333
         if len(set(num)) == 1:
             return True
+        # repeated numbers eg 56_56_56_56
+        # pseudo:
+        # todo: how to find the k values
+        # todo: how to find iterate the string slices, efficiently
+        if num[:2] * k == num
+        if num[:3] * k == num
+        if num[:4] * k == num
+        
+        
         return False
 
     #############
@@ -17,7 +27,7 @@ def is_invalid(num: str) -> bool:
     half: int = len(num) // 2
     if num[0:half] == num[half:]:
         print(f"Invalid: {num=}") if LOGGING else None
-        return Truei
+        return True
 
     # else:
     # split into parts, and check whether each part is equal
